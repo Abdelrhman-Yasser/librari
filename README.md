@@ -10,13 +10,19 @@ Make sure you have the following installed:
 - Maven
 
 ### Build
+```
 mvn package
+```
 
 ### Run
+```
 mvn spring-boot:run
+```
 
 ### Test
+```
 mvn test
+```
 
 
 ## APIs
