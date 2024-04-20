@@ -18,8 +18,9 @@ import maids.cc.lms.formdata.PatronForm;
 @Data
 public class Patron {
     @Id
+    @NonNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final long id;
+    private Long id;
     
     @NonNull
     @NotNull

@@ -77,7 +77,7 @@ public class BookServiceTest {
         when(repository.save(any())).thenAnswer(invocation -> {
             Field idField = Book.class.getDeclaredField("id");
             idField.setAccessible(true);
-            idField.set(actualBook, 1);
+            idField.set(actualBook, 1L);
             return actualBook;
         });
 
@@ -96,12 +96,14 @@ public class BookServiceTest {
 
     @Test
     public void canUpdateBook() {
-        Book actualBook = Instancio.create(Book.class);
+        BookForm bookForm = Instancio.create(BookForm.class);
+        Book actualBook = Book.fromBookData(bookForm);
+        actualBook.setId(1L);
                 
         when(repository.existsById(anyLong())).thenReturn(true);
         when(repository.save(any())).thenReturn(actualBook);
 
-        ResponseEntity<?> response = this.service.updateBook(actualBook);
+        ResponseEntity<?> response = this.service.updateBook(actualBook.getId(), bookForm);
 
         assertEquals(response.getStatusCode(), HttpStatus.CREATED);
         assertTrue(response.getBody() instanceof Book);
@@ -116,11 +118,13 @@ public class BookServiceTest {
 
     @Test
     public void updateBookHandleNotFound() {
-        Book actualBook = Instancio.create(Book.class);
+        BookForm bookForm = Instancio.create(BookForm.class);
+        Book actualBook = Book.fromBookData(bookForm);
+        actualBook.setId(1L);
                 
         when(repository.existsById(anyLong())).thenReturn(false);
 
-        ResponseEntity<?> response = this.service.updateBook(actualBook);
+        ResponseEntity<?> response = this.service.updateBook(actualBook.getId(), bookForm);
 
         assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
         assertTrue(response.getBody() instanceof String);

@@ -1,7 +1,6 @@
 package maids.cc.lms.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -42,8 +41,8 @@ public class BorrowingServiceTest {
     @InjectMocks
     private BorrowingService service;
 
-    private final Book book = new Book(1, "Test Author", "Test Title", new Date());
-    private final Patron patron = new Patron(1, "Test Patron", "test@example.com");
+    private final Book book = new Book(1L, "Test Author", "Test Title", new Date());
+    private final Patron patron = new Patron(1L, "Test Patron", "test@example.com");
     private final BorrowingRecord record = new BorrowingRecord(book, patron);
 
     @Test

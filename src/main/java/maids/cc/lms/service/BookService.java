@@ -40,10 +40,13 @@ public class BookService {
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<?> updateBook(Book book) {
-        if (!this.repository.existsById(book.getId())) {
+    public ResponseEntity<?> updateBook(long id, BookForm bookForm) {
+        if (!this.repository.existsById(id)) {
             return new ResponseEntity<>(NOT_FOUND_ERROR, HttpStatus.NOT_FOUND);
         }
+        
+        Book book = Book.fromBookData(bookForm);
+        book.setId(id);
 
         Book updated = this.repository.save(book);
         return new ResponseEntity<>(updated, HttpStatus.CREATED);

@@ -96,12 +96,14 @@ public class PatronServiceTest {
 
     @Test
     public void canUpdatePatron() {
-        Patron actualPatron = Instancio.create(Patron.class);
+        PatronForm patronForm = Instancio.create(PatronForm.class);
+        Patron actualPatron = Patron.fromPatronData(patronForm);
+        actualPatron.setId(1L);
                 
         when(repository.existsById(anyLong())).thenReturn(true);
         when(repository.save(any())).thenReturn(actualPatron);
 
-        ResponseEntity<?> response = this.service.updatePatron(actualPatron);
+        ResponseEntity<?> response = this.service.updatePatron(actualPatron.getId(), patronForm);
 
         assertEquals(response.getStatusCode(), HttpStatus.CREATED);
         assertTrue(response.getBody() instanceof Patron);
@@ -115,11 +117,13 @@ public class PatronServiceTest {
 
     @Test
     public void updatePatronHandleNotFound() {
-        Patron actualPatron = Instancio.create(Patron.class);
+        PatronForm patronForm = Instancio.create(PatronForm.class);
+        Patron actualPatron = Patron.fromPatronData(patronForm);
+        actualPatron.setId(1L);
                 
         when(repository.existsById(anyLong())).thenReturn(false);
 
-        ResponseEntity<?> response = this.service.updatePatron(actualPatron);
+        ResponseEntity<?> response = this.service.updatePatron(actualPatron.getId(), patronForm);
 
         assertEquals(response.getStatusCode(), HttpStatus.NOT_FOUND);
         assertTrue(response.getBody() instanceof String);

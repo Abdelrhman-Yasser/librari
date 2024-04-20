@@ -41,10 +41,13 @@ public class PatronService {
         return new ResponseEntity<>(created, HttpStatus.CREATED);
     }
 
-    public ResponseEntity<Object> updatePatron(Patron patron) {
-        if (!this.repository.existsById(patron.getId())) {
+    public ResponseEntity<Object> updatePatron(long id, PatronForm patronForm) {
+        if (!this.repository.existsById(id)) {
             return new ResponseEntity<>(NOT_FOUND_ERROR, HttpStatus.NOT_FOUND);
         }
+
+        Patron patron = Patron.fromPatronData(patronForm);
+        patron.setId(id);
 
         Patron updated = this.repository.save(patron);
         return new ResponseEntity<>(updated, HttpStatus.CREATED);

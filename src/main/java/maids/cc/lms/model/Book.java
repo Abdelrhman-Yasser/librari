@@ -20,8 +20,9 @@ import maids.cc.lms.formdata.BookForm;
 @Data
 public class Book {
     @Id
+    @NonNull
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private final long id;
+    private Long id;
     
     @NonNull
     @NotNull

@@ -42,9 +42,9 @@ public class BookController {
         return this.service.createBook(book);
     }
 
-    @PutMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity<?> updateBook(@Valid Book book) {
-        return this.service.updateBook(book);
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<?> updateBook(@PathVariable("id") Long id, @Valid @RequestBody BookForm bookForm) {
+        return this.service.updateBook(id, bookForm);
     }
 
     @DeleteMapping(path = "/{id}")

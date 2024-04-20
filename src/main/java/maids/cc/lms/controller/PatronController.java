@@ -42,9 +42,9 @@ public class PatronController {
         return this.service.createPatron(patron);
     }
 
-    @PutMapping(path = "/{id}", consumes = "application/json")
-    public ResponseEntity<?> updatePatron(@Valid Patron book) {
-        return this.service.updatePatron(book);
+    @PutMapping(path = "/{id}")
+    public ResponseEntity<?> updatePatron(@PathVariable("id") Long id, @Valid @RequestBody PatronForm patronForm) {
+        return this.service.updatePatron(id, patronForm);
     }
 
     @DeleteMapping(path = "/{id}")
