@@ -1,5 +1,7 @@
 package maids.cc.lms.controller;
 
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
 import maids.cc.lms.formdata.PatronForm;
-import maids.cc.lms.model.Patron;
 import maids.cc.lms.service.PatronService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +34,7 @@ public class PatronController {
     }
 
     @GetMapping("/{id}")
+    @Cacheable(value="patrons", key="#id")
     public ResponseEntity<?> getPatron(@PathVariable("id") long id) {
         return this.service.getPatron(id);
     }
@@ -43,11 +45,13 @@ public class PatronController {
     }
 
     @PutMapping(path = "/{id}")
+    @CacheEvict(value="patrons", key="#id")
     public ResponseEntity<?> updatePatron(@PathVariable("id") Long id, @Valid @RequestBody PatronForm patronForm) {
         return this.service.updatePatron(id, patronForm);
     }
 
     @DeleteMapping(path = "/{id}")
+    @CacheEvict(value="patrons", key="#id")
     public ResponseEntity<?> deletePatron(@PathVariable("id") long id) {
         return this.service.deletePatron(id);
     }
